@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* Custom CSS variables for UP tourism theme */
+
+@layer components {
+  /* ... existing styles ... */
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1.5;
+  }
+
+  .form-input {
+    @apply w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition-all;
+  }
+}
+
+@layer base {
+  :root {
+    --color-saffron: #FF6B35;
+    --color-deep-green: #1B4332;
+    --color-gold: #F5A623;
+    --color-cream: #FFF8F0;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-stone-50 text-gray-800 font-sans;
+  }
+
+  /* Fix Leaflet map controls overlapping sticky navbar */
+  .leaflet-top,
+  .leaflet-bottom {
+    z-index: 10 !important;
+  }
+
+  .leaflet-pane {
+    z-index: 4 !important;
+  }
+
+  /* Leaflet popup also needs to stay below navbar */
+  .leaflet-popup {
+    z-index: 9 !important;
+  }
+  
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2.5 rounded-lg transition-colors duration-200 cursor-pointer;
+  }
+  
+  .btn-secondary {
+    @apply border border-orange-500 text-orange-500 hover:bg-orange-50 font-medium px-6 py-2.5 rounded-lg transition-colors duration-200 cursor-pointer;
+  }
+  
+  .card {
+    @apply bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden;
+  }
+  
+  .section-title {
+    @apply text-3xl font-bold text-gray-800 mb-2;
+  }
+  
+  .section-subtitle {
+    @apply text-gray-500 text-lg mb-8;
+  }
+}
