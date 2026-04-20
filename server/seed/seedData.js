@@ -807,7 +807,7 @@ const seedDB = async () => {
     console.log(`Seeded ${createdHotels.length} hotels`);
 
     // Clear products and orders too
-    await Product.deleteMany();
+    await User.deleteMany({ role: 'admin' });
 
     // Seed products
     const productData = getProducts(destMap);
