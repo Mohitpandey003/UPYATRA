@@ -18,7 +18,7 @@ const destinations = [
     category: 'historical',
     description: 'The Taj Mahal is an ivory-white marble mausoleum on the right bank of the river Yamuna in Agra. Commissioned in 1632 by Mughal emperor Shah Jahan to house the tomb of his beloved wife Mumtaz Mahal, it took 22 years and 20,000 artisans to complete. Widely considered one of the greatest architectural achievements in the world, it was designated a UNESCO World Heritage Site in 1983.',
     shortDescription: 'UNESCO World Heritage Site and one of the Seven Wonders of the World.',
-    coverImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Taj_Mahal_%28Edited%29.jpeg/1200px-Taj_Mahal_%28Edited%29.jpeg',
+    coverImage: 'https://wallpapercave.com/wp/wp6016841.jpg',
     images: [],
     entryFee: { indian: 50, foreign: 1100 },
     timings: { open: '06:00 AM', close: '07:00 PM', closedOn: 'Friday' },
@@ -777,21 +777,33 @@ const seedDB = async () => {
 
     await Destination.deleteMany();
     await Hotel.deleteMany();
-    await User.deleteMany();
-    console.log('Cleared existing data');
 
-    await User.create({
-      name: 'Admin',
-      email: 'admin@upyatra.com',
-      password: 'admin123',
-      role: 'admin',
-    });
-    await User.create({
-      name: 'Test User',
-      email: 'user@upyatra.com',
-      password: 'user123',
-      role: 'user',
-    });
+    await User.findOneAndUpdate(
+  { email: 'admin@upyatra.com' },
+  {
+    name: 'Admin',
+    password: 'admin123',
+    role: 'admin',
+  },
+  {
+    upsert: true,
+    new: true,
+    setDefaultsOnInsert: true,
+  }
+);
+    await User.findOneAndUpdate(
+  { email: 'user@upyatra.com' },
+  {
+    name: 'Test User',
+    password: 'user123',
+    role: 'user',
+  },
+  {
+    upsert: true,
+    new: true,
+    setDefaultsOnInsert: true,
+  }
+);
     console.log('Users created');
 
     const createdDestinations = await Destination.insertMany(destinations);
@@ -806,8 +818,6 @@ const seedDB = async () => {
     const createdHotels = await Hotel.insertMany(hotelData);
     console.log(`Seeded ${createdHotels.length} hotels`);
 
-    // Clear products and orders too
-    await User.deleteMany({ role: 'admin' });
 
     // Seed products
     const productData = getProducts(destMap);
